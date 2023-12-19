@@ -1,0 +1,12 @@
+{
+  "name": "blog-site",
+  "version": "1.0.0",
+  "description": "Travel Blog Site with React 18, Node.js, Postgres",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nkululeko",
+  "license": "ISC"
+}
