@@ -1,15 +1,18 @@
 import express from "express";
 import dotenv from "dotenv";
-import { client } from "./configurations/database/database_config.js";
+import { pool } from "./configurations/database/database_config.js";
+import auth_router from "./routes/auth.route.js";
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
 
+app.use(express.json());
+
 const connectDB = async () => {
     try {
-        await client.connect()
+        await pool.connect();
         console.log("Successfully connected to database");
 
         app.listen(port, () => {
@@ -21,3 +24,5 @@ const connectDB = async () => {
 }
 
 connectDB();
+
+app.use('/api', auth_router);
