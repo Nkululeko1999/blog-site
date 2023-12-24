@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { pool } from "./configurations/database/database_config.js";
 import auth_router from "./routes/auth.route.js";
+import bodyParser from "body-parser";
 
 dotenv.config();
 
@@ -9,6 +10,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
+app.use(bodyParser.json());
 
 const connectDB = async () => {
     try {

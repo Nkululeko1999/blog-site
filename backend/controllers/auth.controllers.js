@@ -1,6 +1,9 @@
 import { userExists, checkMissingInfo, saveUserToDB, getUserByEmailService } from "../services/auth.services.js";
 import { errorHandler } from "../middleware/error/error.middleware.js";
 import bcryptjs from "bcryptjs";
+import "dotenv/config";
+import { sendEmail } from "./email.controllers.js";
+
 
 export const register = async (req, res, next) => {
   const userFound = await userExists(req);
@@ -14,6 +17,8 @@ export const register = async (req, res, next) => {
       if(missingInfo === true){
         errorHandler(res, next, false, 422, 'Required Information Missing');
       }else{
+
+        await sendEmail(req);
         await saveUserToDB(req, res, next);
       }
     }
