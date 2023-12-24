@@ -3,17 +3,26 @@ import { transporter } from "../configurations/emails/emails.config.js";
 export const signupEmailTemplate = () => {
     let emailTemplate;
     emailTemplate = `<h1>Successfully Signed up to travel blog</h1>`;
-    return { emailTemplate };
+    return emailTemplate;
 };
 
-export const sendEmail = async (req) => {
+export const resetPasswordLink = (resetPasswordLink) => {
+    let emailTemplate;
+    emailTemplate = `
+    <h1>Reset Password</h1>
+    <p>Follow this link to reset your password</p>
+    <p>${resetPasswordLink}</p>
+    `;
+    return emailTemplate;
+};
+
+export const sendEmail = async (req, emailTemplate, emailSubject ) => {
     try {
       const {email} = req.body;
-      const emailSubject  = 'Signup to Travel Blog';
   
       console.log(`Recipient Email: ${email}`);
-      
-      const { emailTemplate } = await signupEmailTemplate();
+      console.log(`Email Template: ${emailTemplate}`);
+      console.log(`Email Subject: ${emailSubject}`);
       
       const mailOptions = {
         from: process.env.NODEMAILER_USER,

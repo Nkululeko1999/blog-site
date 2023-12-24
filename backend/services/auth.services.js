@@ -1,4 +1,4 @@
-import { checkEmailExists, getUserByEmail, registerUser } from "../queries/user/user.queries.js";
+import { checkEmailExists, getUserByEmail, getUserByToken, saveUser, updatePasswordQuery, updateTokenAndExpDate } from "../queries/user/user.queries.js";
 import { pool } from "../configurations/database/database_config.js";
 import { errorHandler } from "../middleware/error/error.middleware.js";
 import bcryptjs from "bcryptjs";
@@ -41,7 +41,7 @@ export const saveUserToDB = async (req, res, next) => {
   const hashedPassword = bcryptjs.hashSync(password, 12);
 
   try {
-    await pool.query(registerUser, [username, email, hashedPassword, defaultUserRole, profile_pic, updated_at]);
+    await pool.query(saveUser, [username, email, hashedPassword, defaultUserRole, profile_pic, updated_at]);
 
     errorHandler(res, next, true, 200, 'User Successfully created');
 
@@ -62,5 +62,41 @@ export const getUserByEmailService = async (req, res, next) => {
     errorHandler(res, next, false, 500, 'Failed to Get User By Email');
   }
 
+  // console.log(user.rows[0]);
   return user.rows[0];
+}
+
+export const getUserByTokenService = async (req, res, next) => {
+  const { token } = req.params;
+  let user;
+
+  try {
+     user = await pool.query(getUserByToken, [token,  new Date()]);
+  } catch (error) {
+    console.log(error.message);
+    errorHandler(res, next, false, 500, 'Failed to Get User By Token');
+  }
+
+  console.log(user.rows[0]);
+  return user.rows[0];
+}
+
+export const updateTokenAndExpDateService = async (req, res, next, reset_token, reset_token_exp) => {
+  const { email } = req.body;
+  try {
+    await pool.query(updateTokenAndExpDate, [reset_token, reset_token_exp, email]);
+    errorHandler(res, next, true, 200, 'User Successfully Saved and Token Generated');
+} catch (error) {
+ console.log(error.message);
+ errorHandler(res, next, false, 500, 'Internal Server Error');
+}
+}
+
+export const updatePasswordService = async (password, token, next) => {
+  try {
+      await pool.query(updatePasswordQuery, [password, token]);
+ } catch (error) {
+   console.log(error.message);
+   errorHandler(res, next, false, 500, 'Internal Server Error');
+ }
 }
