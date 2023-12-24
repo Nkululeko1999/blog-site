@@ -1,15 +1,16 @@
-import { checkEmailExists, registerUser } from "../queries/user/user.queries.js";
+import { checkEmailExists, getUserByEmail, registerUser } from "../queries/user/user.queries.js";
 import { pool } from "../configurations/database/database_config.js";
 import { errorHandler } from "../middleware/error/error.middleware.js";
+import bcryptjs from "bcryptjs";
 
 
 export const userExists = async (req) => {
 
-  const {username} = req.body;
+  const {email} = req.body;
   let userFound;
 
   try {
-      const result = await pool.query(checkEmailExists, [username]);
+      const result = await pool.query(checkEmailExists, [email]);
       userFound = result.rows.length > 0 ? true : false;
 
     } catch (error) {
@@ -20,11 +21,11 @@ export const userExists = async (req) => {
   }
 
 export const checkMissingInfo = (req) => {
-  const {username, email, password} = req.body;
+  const {email, password} = req.body;
   let missingInfo;
 
   try {
-    missingInfo = (!username || !email || !password) ? true : false;
+    missingInfo = (!email || !password) ? true : false;
 
   return missingInfo;
 
@@ -37,9 +38,10 @@ export const checkMissingInfo = (req) => {
 export const saveUserToDB = async (req, res, next) => {
   const {username, email, password, user_role, profile_pic, updated_at} = req.body;
   const defaultUserRole = user_role || "basic";
+  const hashedPassword = bcryptjs.hashSync(password, 12);
 
   try {
-    await pool.query(registerUser, [username, email, password, defaultUserRole, profile_pic, updated_at]);
+    await pool.query(registerUser, [username, email, hashedPassword, defaultUserRole, profile_pic, updated_at]);
 
     errorHandler(res, next, true, 200, 'User Successfully created');
 
@@ -47,4 +49,18 @@ export const saveUserToDB = async (req, res, next) => {
     console.log(error.message);
     errorHandler(res, next, false, 500, 'Failed to Create User');
   }
+}
+
+export const getUserByEmailService = async (req, res, next) => {
+  const {email} = req.body;
+  let user;
+
+  try {
+     user = await pool.query(getUserByEmail, [email]);
+  } catch (error) {
+    console.log(error.message);
+    errorHandler(res, next, false, 500, 'Failed to Get User By Email');
+  }
+
+  return user.rows[0];
 }
