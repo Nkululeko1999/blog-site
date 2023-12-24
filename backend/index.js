@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { pool } from "./configurations/database/database_config.js";
 import auth_router from "./routes/auth.route.js";
 import bodyParser from "body-parser";
+import core_router from "./routes/core.route.js";
 
 dotenv.config();
 
@@ -28,3 +29,4 @@ const connectDB = async () => {
 connectDB();
 
 app.use('/api', auth_router);
+app.use('/api', core_router);
