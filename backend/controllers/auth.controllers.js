@@ -72,10 +72,11 @@ export const resetPassword = async (req, res, next) => {
 
     const resetToken = generateToken();
     const reset_token_expiry = new Date(Date.now() + 10 * 60 * 1000);
+    const resetPasswordUrl = process.env.RESET_PASS_URL;
 
     await updateTokenAndExpDateService(req, res, next, resetToken, reset_token_expiry);
 
-    const resetLink = `http://localhost:4200/api/reset-password/${resetToken}`;
+    const resetLink = `${resetPasswordUrl}/${resetToken}`;
 
     const emailTemplate = await resetPasswordLink(resetLink);
     const emailSubject = 'Reset Password';
