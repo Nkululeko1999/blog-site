@@ -1,5 +1,6 @@
 import { errorHandler } from "../middleware/error/error.middleware.js"
-import { deletePostService, getPostById, likePostService, newPostService, numOfLikeService, removePostLikeService } from "../services/core.services.js";
+import { commentService, deletePostService, getPostById, likePostService, newPostService, 
+    numOfCommentService, numOfLikeService, removePostLikeService } from "../services/core.services.js";
 
 export const createPost = async (req, res, next) => {
     try {
@@ -52,6 +53,29 @@ export const numOfLikes = async (req, res, next) => {
         const result = await numOfLikeService(req);
         const likeCount = result.rows[0].like_count;
         errorHandler(res, next, true, 200, `${likeCount}`);
+    } catch (error) {
+        console.log(error.message);
+        errorHandler(res, next, false, 500, 'Internal Server Error');
+    }
+}
+
+export const comment = async (req, res, next) => {
+    try {
+        (await commentService(req))? 
+            errorHandler(res, next, true, 200, 'Commented') :
+            errorHandler(res, next, false, 401, 'Could not Comment. Provide a comment')
+        }
+     catch (error) {
+        console.log(error.message);
+        errorHandler(res, next, false, 500, 'Internal Server Error');
+    }
+}
+
+export const numOfComment = async (req, res, next) => {
+    try {
+        const result = await numOfCommentService(req);
+        const commentCount = result.rows[0].comment_count;
+        errorHandler(res, next, true, 200, `${commentCount}`);
     } catch (error) {
         console.log(error.message);
         errorHandler(res, next, false, 500, 'Internal Server Error');
