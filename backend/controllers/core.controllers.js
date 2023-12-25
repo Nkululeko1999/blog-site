@@ -1,5 +1,5 @@
 import { errorHandler } from "../middleware/error/error.middleware.js"
-import { deletePostService, getPostById, likePostService, newPostService, removePostLikeService } from "../services/core.services.js";
+import { deletePostService, getPostById, likePostService, newPostService, numOfLikeService, removePostLikeService } from "../services/core.services.js";
 
 export const createPost = async (req, res, next) => {
     try {
@@ -41,6 +41,17 @@ export const removePostLike = async (req, res, next) => {
     try {
         (await removePostLikeService(req))? errorHandler(res, next, true, 200, 'Liked Removed') :
         errorHandler(res, next, 400, `Could not remove like`);
+    } catch (error) {
+        console.log(error.message);
+        errorHandler(res, next, false, 500, 'Internal Server Error');
+    }
+}
+
+export const numOfLikes = async (req, res, next) => {
+    try {
+        const result = await numOfLikeService(req);
+        const likeCount = result.rows[0].like_count;
+        errorHandler(res, next, true, 200, `${likeCount}`);
     } catch (error) {
         console.log(error.message);
         errorHandler(res, next, false, 500, 'Internal Server Error');

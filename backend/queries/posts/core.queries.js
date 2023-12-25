@@ -3,3 +3,4 @@ export const getPostByIdQuery = `SELECT * FROM posts WHERE post_id = $1`;
 export const deletePostQuery = `DELETE FROM posts WHERE post_id = $1`;
 export const likePostQuery = `INSERT INTO likes (user_id, post_id, created_at) VALUES ($1, $2, CURRENT_TIMESTAMP) RETURNING *`;
 export const removeLikeQuery = `DELETE FROM likes WHERE like_id = $1 AND user_id = $2 AND post_id = $3`;
+export const likeCountQuery = `SELECT COUNT(*) AS like_count FROM likes WHERE post_id = $1`;

@@ -1,6 +1,6 @@
 import { pool } from "../configurations/database/database_config.js";
 import { errorHandler } from "../middleware/error/error.middleware.js";
-import { createPostQuery, deletePostQuery, getPostByIdQuery, likePostQuery, removeLikeQuery } from "../queries/posts/core.queries.js";
+import { createPostQuery, deletePostQuery, getPostByIdQuery, likeCountQuery, likePostQuery, removeLikeQuery } from "../queries/posts/core.queries.js";
 
 export const newPostService = async (req, res, next) => {
     const { user_id, title, content, post_img } = req.body;
@@ -60,4 +60,15 @@ export const removePostLikeService = async (req) => {
     }
     console.log(`Result of Delete Post: ${result}`);
     return result;
+}
+
+export const numOfLikeService = async (req) => {
+    const {post_id} = req.params;
+    let likeCount;
+    try {
+        likeCount = await pool.query(likeCountQuery, [post_id]);
+    } catch (error) {
+        console.log(error.message);
+    }
+    return likeCount;
 }
