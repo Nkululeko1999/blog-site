@@ -1,0 +1,47 @@
+$primary: #115e59;
+$base-color: #f8fafc;
+$styled-white: #fbf9f9;
+
+.container {
+    .row {
+        margin: 0;
+        margin-top: 3rem;
+
+        .register-box {
+            box-shadow: 0.5px 0.5px 4px rgba(0, 0, 0, 0.1), -0.5px -0.5px 4px rgba(0, 0, 0, 0.1);
+
+            .form-register {
+                width: 100%;
+                max-width: 30rem;
+                margin: 1rem auto;
+
+                .form-header {
+                    h2 {
+                        color: $primary;
+                    }
+                }
+                
+                .form-label-group > input {
+                    border-radius: 0;
+                    padding: 10px 16px;
+                    font-size: 1rem;
+                    color: $primary;
+                }
+            }
+
+            .btn-block {
+                display: block;
+                width: 100%;
+            }
+
+            .btn, .btn-lg {
+                padding: 0.5rem 1rem;
+                font-size: 1.25rem;
+                line-height: 1.5;
+                border-radius: 0;
+                background-color: $primary;
+                color: $styled-white;
+            }
+        }
+    }
+}

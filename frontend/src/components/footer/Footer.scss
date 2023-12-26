@@ -7,9 +7,14 @@ $styled-white: #fbf9f9;
     background-color: $background;
 
     .container .row:nth-last-child(2){
+
+        input.form-control {
+            border-radius: 0;
+        }
         button.btn {
             background-color: $blue-bg;
             color: $styled-white;
+            border-radius: 0;
         }
     }
 
