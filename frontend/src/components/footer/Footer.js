@@ -33,6 +33,9 @@ export default function Footer() {
                         <NavLink to={"/categories"} className={"nav-link"}>Categories</NavLink>
                     </li>
                     <li>
+                        <NavLink to={"/archives"} className={"nav-link"}>Archives</NavLink>
+                    </li>
+                    <li>
                         <NavLink to={"/contact-us"} className={"nav-link"}>Contact Us</NavLink>
                     </li>
                 </ul>

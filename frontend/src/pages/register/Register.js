@@ -42,7 +42,7 @@ export default function Register() {
                         <input type="password" id="confirmPassword" name='confirmPassword' class="form-control" placeholder="Confirm Password" required="" />
                     </div>
 
-                    <button class="btn btn-lg btn-block mt-4" type="submit">Sign in</button>
+                    <button class="btn btn-lg btn-block mt-4" type="submit">Register</button>
 
                     <div className='redirect-login d-flex justify-content-between mt-3'>
                         <p>Already have an Account</p>
