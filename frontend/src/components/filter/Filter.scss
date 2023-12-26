@@ -1,0 +1,56 @@
+.filter-body {
+    max-width: 22rem;
+    form {
+        margin-top: 1rem;
+
+        .categories-box {
+            .category-heading {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            input.form-control {
+                border-radius: 0;
+            }
+        }
+
+        .countries-box {
+            .country-heading {
+                font-size: 1rem;
+                margin-top: 1rem;
+                margin-bottom: 0.75rem;
+            }
+
+            input.form-control {
+                border-radius: 0;
+            }
+        }
+
+        .traveling-box {
+            .traveling-heading {
+                font-size: 1rem;
+                margin: 1rem 0 0.75rem 0;
+            }
+
+            .other-check {
+                input.form-control {
+                    border-radius: 0;
+                    padding: 6px 12px;
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        .uploads {
+            .upload-heading {
+                font-size: 1rem;
+                margin: 1rem 0 0.75rem 0;
+            }
+
+            .form-check {
+                margin-right: 1rem;
+            }
+        }
+
+    }
+}

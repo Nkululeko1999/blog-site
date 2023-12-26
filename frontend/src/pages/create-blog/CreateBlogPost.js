@@ -1,6 +1,7 @@
 import React from 'react';
 import BlogForm from "../../components/blog-form/BlogForm.js";
 import Welcome from '../../components/welcome/Welcome.js';
+import Filter from '../../components/filter/Filter.js';
 
 export default function CreateBlogPost() {
   return (
@@ -12,6 +13,7 @@ export default function CreateBlogPost() {
         <div className='col-md-4'>
           <div className='filter-header'>
             <h2>Filter</h2>
+            <Filter />
           </div>
         </div>
         <div className='col-md-8'>
