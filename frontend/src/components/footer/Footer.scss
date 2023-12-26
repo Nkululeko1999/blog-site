@@ -1,0 +1,40 @@
+$background: #115e59;
+$medium-background: #134e4a;
+$blue-bg: #2563eb;
+$styled-white: #fbf9f9;
+
+.footer-section {
+    background-color: $background;
+
+    .container .row:nth-last-child(2){
+        button.btn {
+            background-color: $blue-bg;
+            color: $styled-white;
+        }
+    }
+
+    .container .row:nth-last-child(1){
+        margin-top: 2rem;
+
+        .social-icons {
+            padding: 4px 8px;
+            font-size: 1.25rem;
+            border-radius: 50%;
+            background-color: $medium-background;
+            color: $styled-white;
+            border: 2px solid $styled-white;
+            margin-right: 10px;
+            transition: opacity 0.215s;
+
+            &:hover {
+                opacity: 0.45;
+            }
+        }
+
+        .nav-link{
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
