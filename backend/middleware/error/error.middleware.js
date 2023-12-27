@@ -1,4 +1,4 @@
-export const errorHandler = (res, next, success, statuscode, message) => {
+export const errorHandler = (res, success, statuscode, message) => {
     const errorDisplay = {
         Success: success,
         StatusCode: statuscode,
@@ -6,5 +6,4 @@ export const errorHandler = (res, next, success, statuscode, message) => {
     };
 
     res.status(statuscode).json(errorDisplay);
-    next();
 };
