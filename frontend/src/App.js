@@ -9,6 +9,7 @@ import Categories from './pages/categories/Categories.js';
 import CreateBlogPost from './pages/create-blog/CreateBlogPost.js'
 import Home from './pages/home/Home.js';
 import ForgotPassword from './pages/forgot-password/ForgotPassword.js';
+import NewPassword from './pages/new-password/NewPassword.js';
 
 function App() {
   return (  
@@ -22,6 +23,7 @@ function App() {
         <Route path='/categories' element={<Categories />} />
         <Route path='/create-blog' element={<CreateBlogPost />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/new-password' element={<NewPassword />} />
       </Routes>
       <Footer />
     </BrowserRouter>
