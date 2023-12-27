@@ -25,9 +25,12 @@ export default function Login() {
 
                 <button class="btn btn-lg btn-block mt-4" type="submit">Login</button>
 
-                <div className='redirect-login d-flex justify-content-between mt-3'>
+                <div className='redirect-login d-flex justify-content-between align-items-center mt-1'>
                     <p>Don't have an Account</p>
                     <Link to="/register">Register</Link>
+                </div>
+                <div className='forgot-password d-flex justify-content-end mt-1'>
+                    <Link to="/forgot-password">Forgot Password</Link>
                 </div>
             </form>
         </div>

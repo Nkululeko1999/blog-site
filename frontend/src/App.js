@@ -8,6 +8,7 @@ import Destinations from './pages/destinations/Destinations.js';
 import Categories from './pages/categories/Categories.js';
 import CreateBlogPost from './pages/create-blog/CreateBlogPost.js'
 import Home from './pages/home/Home.js';
+import ForgotPassword from './pages/forgot-password/ForgotPassword.js';
 
 function App() {
   return (  
@@ -20,6 +21,7 @@ function App() {
         <Route path='/destinations' element={<Destinations />} />
         <Route path='/categories' element={<Categories />} />
         <Route path='/create-blog' element={<CreateBlogPost />} />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
       </Routes>
       <Footer />
     </BrowserRouter>
