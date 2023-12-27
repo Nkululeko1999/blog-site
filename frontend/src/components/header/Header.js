@@ -21,7 +21,7 @@ export default function Header() {
   }, []);
   
   return (
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg horizontal-navbar">
       <div class="container">
         <NavLink to="/" exact activeClassName="navbar-brand">
             <Logo />
