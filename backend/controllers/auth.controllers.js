@@ -6,56 +6,57 @@ import { resetPasswordLink, sendEmail, signupEmailTemplate } from "./email.contr
 import crypto from "crypto";
 
 
-export const register = async (req, res, next) => {
+export const register = async (req, res) => {
   const userFound = await userExists(req);
   const missingInfo = await checkMissingInfo(req);
 
   try {
     if(userFound === true){
-      errorHandler(res, next, false, 409, 'User Already Exists');
+      errorHandler(res, false, 409, 'User Already Exists');
     }
     else{
       if(missingInfo === true){
-        errorHandler(res, next, false, 422, 'Required Information Missing');
+        errorHandler(res, false, 422, 'Required Information Missing');
       }else{
 
         const emailTemplate = await signupEmailTemplate();
-        const emailSubject = 'Travel Blog Signup'
+        const emailSubject = 'Travel Blog Signup';
+        await saveUserToDB(req, res);
         await sendEmail(req, emailTemplate, emailSubject);
-        await saveUserToDB(req, res, next);
+        
       }
     }
   } catch (error) {
-    errorHandler(res, next, false, 500, 'Internal Server Error');
+    errorHandler(res, false, 500, 'Internal Server Error');
   } 
 }
 
-export const login = async (req, res, next) => {
+export const login = async (req, res) => {
   const userFound = await userExists(req);
   const missingInfo = await checkMissingInfo(req);
   const {password} = req.body;
 
   try {
     if(missingInfo === true){
-      errorHandler(res, next, false, 422, 'Required Information Missing');
+      errorHandler(res, false, 422, 'Required Information Missing');
     }
     else{
       if(userFound === true){
-        const user = await getUserByEmailService(req, res, next);
+        const user = await getUserByEmailService(req, res);
         const savedPassword = user.password;       
         const passwordsMatch = bcryptjs.compareSync(password, savedPassword);
 
-        errorHandler(res, next, passwordsMatch,
+        errorHandler(res, passwordsMatch,
           passwordsMatch ? 200 : 409,
           passwordsMatch ? 'Login Successful' : 'Login Failed. Wrong login Details. Try to reset password'
         );
         
       }else{
-        errorHandler(res, next, false, 409, 'User Not Found. Please register for an account');
+        errorHandler(res, false, 409, 'User Not Found. Please register for an account');
       }
     }
   } catch (error) {
-    errorHandler(res, next, false, 500, 'Internal Server Error');
+    errorHandler(res, false, 500, 'Internal Server Error');
   }
 } 
 
@@ -63,18 +64,18 @@ export const generateToken = () => {
   return crypto.randomBytes(20).toString('hex');
 }
 
-export const resetPassword = async (req, res, next) => {
+export const resetPassword = async (req, res) => {
   try {
     const user = await getUserByEmailService(req);
     if(!user){
-      errorHandler(res, next, false, 404, 'User Nof Found');
+      errorHandler(res, false, 404, 'User Nof Found');
     }
 
     const resetToken = generateToken();
     const reset_token_expiry = new Date(Date.now() + 10 * 60 * 1000);
     const resetPasswordUrl = process.env.RESET_PASS_URL;
 
-    await updateTokenAndExpDateService(req, res, next, resetToken, reset_token_expiry);
+    await updateTokenAndExpDateService(req, res, resetToken, reset_token_expiry);
 
     const resetLink = `${resetPasswordUrl}/${resetToken}`;
 
@@ -83,28 +84,28 @@ export const resetPassword = async (req, res, next) => {
     await sendEmail(req, emailTemplate, emailSubject);
 
   } catch (error) {
-    errorHandler(res, next, false, 500, 'Internal Server Error');
+    errorHandler(res, false, 500, 'Internal Server Error');
   }
 
 }
 
-export const resetPasswordWithToken = async (req, res, next) => { 
+export const resetPasswordWithToken = async (req, res) => { 
   const { token } = req.params;
   const { newPassword } = req.body;
 
   try {
     const user = getUserByTokenService(req, res);
     if (!user) {
-      errorHandler(res, next, false, 401, 'Invalid or expired token');
+      errorHandler(res, false, 401, 'Invalid or expired token');
     }
 
     const hashedPassword = await bcryptjs.hash(newPassword, 12);
 
-    await updatePasswordService(hashedPassword, token, next);
+    await updatePasswordService(hashedPassword, token);
 
-    errorHandler(res, next, true, 200, 'Password reset successful');
+    errorHandler(res, true, 200, 'Password reset successful');
   } catch (error) {
     console.error('Error:', error.message);
-    errorHandler(res, next, false, 500, 'Internal Server Error');
+    errorHandler(res, false, 500, 'Internal Server Error');
   }
 }
