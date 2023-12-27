@@ -4,6 +4,9 @@ $base-color: #115e59;
     .row {
         margin: 2.5rem 0;
         .welcome-box {
+            padding-left: 0;
+            padding-right: 0;
+            
             h1, p {
                 color: $base-color;
                 line-height: 1.5;
@@ -15,6 +18,10 @@ $base-color: #115e59;
                 margin: 1rem 0;
                 font-weight: 400;
                 font-size: 2.25rem;
+            }
+
+            p{
+                margin-bottom: 0;
             }
         }
     }
