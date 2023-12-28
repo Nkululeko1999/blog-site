@@ -1,5 +1,7 @@
 import './App.scss';
 import { BrowserRouter , Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Footer from './components/footer/Footer.js';
 import Header from './components/header/Header.js';
 import Register from './pages/register/Register.js';
@@ -10,6 +12,8 @@ import CreateBlogPost from './pages/create-blog/CreateBlogPost.js'
 import Home from './pages/home/Home.js';
 import ForgotPassword from './pages/forgot-password/ForgotPassword.js';
 import NewPassword from './pages/new-password/NewPassword.js';
+
+export const apiUrl = process.env.REACT_APP_API_URL;
 
 function App() {
   return (  
@@ -25,6 +29,7 @@ function App() {
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/new-password' element={<NewPassword />} />
       </Routes>
+      <ToastContainer />
       <Footer />
     </BrowserRouter>
   );

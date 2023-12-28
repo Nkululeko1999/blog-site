@@ -12,11 +12,11 @@ export const register = async (req, res) => {
 
   try {
     if(userFound === true){
-      errorHandler(res, false, 409, 'User Already Exists');
+      return res.status(200).json({ success: false, message: 'User Already Exists. Please Login' });
     }
     else{
       if(missingInfo === true){
-        errorHandler(res, false, 422, 'Required Information Missing');
+        return errorHandler(res, false, 422, 'Required Information Missing');
       }else{
 
         const emailTemplate = await signupEmailTemplate();
